@@ -1,0 +1,98 @@
+/* signin page */
+
+.sinIn-body {
+    background-color: var(--primary);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.c-inputs {
+    width: 95%;
+    height: 35px;
+    border: none;
+    outline-color: var(--primary);
+    padding-left: 5px;
+}
+
+
+
+.c-inputs:disabled {
+    background-color: rgb(160, 160, 160);
+}
+
+
+.background {
+    height: 100vh;
+    width: 100%;
+}
+
+.box {
+    min-height: 500px;
+}
+
+.b1 {
+    background-color: var(--primary);
+
+}
+
+.large-logo {
+    width: 200px;
+    margin: 20px;
+    transition: 0.5s;
+}
+
+.b2 {
+    background-color: var(--primary);
+}
+
+.hider1 {
+    opacity: 0;
+    /* transition: 200ms; */
+}
+
+.hider2 {
+    opacity: 0;
+    transition: 400ms;
+}
+
+
+.c-shadow {
+    box-shadow: rgba(0, 0, 0, 0.467) 15px 15px 20px;
+}
+
+.c-shadow-down {
+    box-shadow: rgba(0, 0, 0, 0.467) 0px 15px 20px;
+}
+
+/* user selection */
+.user-selector-block {
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    transition: 500ms;
+    box-shadow: rgba(0, 0, 0, 0.43) 10px 10px 15px;
+}
+
+.user-selector-block:hover {
+    transition: 500ms;
+    scale: 1.07;
+}
+
+@media (max-width: 768px) {
+    .large-logo {
+        width: 70px;
+        margin: 20px;
+    }
+
+    #contenContainer {
+        transform: scale(0.8);
+    }
+
+
+    /* user selection */
+    .user-selector-block {
+        width: 100px;
+        height: 100px;
+        margin: 20px;
+    }
+}

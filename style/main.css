@@ -1,0 +1,22 @@
+:root {
+    --primary: rgb(151, 56, 252);
+    --secondary: rgb(43, 43, 43);
+}
+
+.c-bg-primary {
+    background-color: var(--primary);
+}
+
+
+/* typography */
+/* cutom font size for responsiveness */
+.crs-fs-6 {
+    font-size: 24px;
+}
+
+@media (max-width: 768px) {
+    /* cutom font size for responsiveness */
+    .crs-fs-6 {
+        font-size: 16px;
+    }
+}
