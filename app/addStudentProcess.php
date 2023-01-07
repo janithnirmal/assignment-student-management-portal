@@ -1,6 +1,5 @@
 <?php
 
-
 require "SMTP.php";
 require "PHPMailer.php";
 require "Exception.php";
@@ -10,7 +9,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 session_start();
 require("../connection.php");
 
-if (isset($_SESSION["au"])) { // user validation
+if (isset($_SESSION["u"])) { // user validation
 
     $fname = $_POST["fname"];
     $lname = $_POST["lname"];
@@ -18,6 +17,10 @@ if (isset($_SESSION["au"])) { // user validation
     $email = $_POST["email"];
     $mobile1 = $_POST["mobile1"];
     $mobile2 = $_POST["mobile2"];
+    $grade = $_POST["grade"];
+    $birthday = $_POST["birthday"];
+    $gname = $_POST["gname"];
+    $gmobile = $_POST["gmobile"];
     $gender = $_POST["gender"];
     $line1 = $_POST["line1"];
     $line2 = $_POST["line2"];
@@ -31,6 +34,10 @@ if (isset($_SESSION["au"])) { // user validation
         echo ("Please enter a first name");
     } else if (strlen($fname) > 45) {
         echo ("Maximum Character limit for first name is 45 charactors. Please add a name smaller than that");
+    } elseif (empty($gname) || $gname == 0) {
+        echo ("Please enter a gardiant name");
+    } else if (strlen($gname) > 45) {
+        echo ("Maximum Character limit for gardiant name is 45 charactors. Please add a name smaller than that");
     } else if (empty($lname) || $lname == 0) {
         echo ("Please enter a last name");
     } else if (strlen($lname) > 45) {
@@ -50,13 +57,19 @@ if (isset($_SESSION["au"])) { // user validation
     } else if (empty($mobile1)) {
         echo ("Please enter your mobile !!!");
     } else if (strlen($mobile1) != 10) {
-        echo ("Mobile must have 10 characters");
+        echo ("Mobile1 must have 10 characters");
     } else if (!preg_match("/07[0,1,2,4,5,6,7,8][0-9]/", $mobile1)) {
+        echo ("Invalid mobile !!!");
+    } else if (empty($gmobile)) {
+        echo ("Please enter your mobile !!!");
+    } else if (strlen($gmobile) != 10) {
+        echo ("gMobile must have 10 characters");
+    } else if (!preg_match("/07[0,1,2,4,5,6,7,8][0-9]/", $gmobile)) {
         echo ("Invalid mobile !!!");
     } else if (empty($mobile2)) {
         echo ("Please enter your mobile !!!");
     } else if (strlen($mobile2) != 10) {
-        echo ("Mobile must have 10 characters");
+        echo ("Mobile2 must have 10 characters");
     } else if (!preg_match("/07[0,1,2,4,5,6,7,8][0-9]/", $mobile2)) {
         echo ("Invalid mobile !!!");
     } else if ($mobile1 == $mobile2) {
@@ -65,11 +78,12 @@ if (isset($_SESSION["au"])) { // user validation
 
 
         // check on dbms before add
-        $dbmsCheck1_rs = Database::search("SELECT * FROM academic_officer WHERE nic = '" . $nic . "' ");
+        $dbmsCheck1_rs = Database::search("SELECT * FROM student WHERE nic = '" . $nic . "' ");
         $dbmsCheck1_num = $dbmsCheck1_rs->num_rows;
 
-        $dbmsCheck2_rs = Database::search("SELECT * FROM academic_officer WHERE email = '" . $email . "' ");
+        $dbmsCheck2_rs = Database::search("SELECT * FROM student WHERE email = '" . $email . "' ");
         $dbmsCheck2_num = $dbmsCheck2_rs->num_rows;
+
 
         if ($dbmsCheck1_num == 1) {
             echo ("There is a user with tha same NIC!!!");
@@ -83,13 +97,14 @@ if (isset($_SESSION["au"])) { // user validation
             $d->setTimezone($tz);
             $date = $d->format("Y-m-d H:i:s");
 
+            // $newBirthday = $birthday->format("Y-m-d");
+
             $verificationCode = uniqid();
 
-            Database::iud("INSERT INTO academic_officer(nic, email, fname, lname, mobile1, mobile2, verification_code, verification_status, line1, line2, city, district, province)
-            VALUES ('" . $nic . "', '" . $email . "', '" . $fname . "', '" . $lname . "', '" . $mobile1 . "', '" . $mobile2 . "', '" . $verificationCode . "', '0', '" . $line1 . "', '" . $line2 . "', '" . $city . "', '" . $district . "', '" . $province . "') ");
+            Database::iud("INSERT INTO student (nic, email, fname, lname, mobile1, mobile2, gname, gmobile, birthday, grade, verification_code, verification_status, line1, line2, city, district, province, academic_officer_nic)
+            VALUES ('" . $nic . "', '" . $email . "', '" . $fname . "', '" . $lname . "', '" . $mobile1 . "', '" . $mobile2 . "', '" . $gname . "', '" . $gmobile . "', '" . $birthday . "', '" . $grade . "', '" . $verificationCode . "', '0', '" . $line1 . "', '" . $line2 . "', '" . $city . "', '" . $district . "', '" . $province . "' , '" . $_SESSION['u']['nic'] . "') ");
 
-
-
+            // send a verification mail
             // email code
             $mail = new PHPMailer;
             $mail->IsSMTP();
@@ -103,8 +118,8 @@ if (isset($_SESSION["au"])) { // user validation
             $mail->addReplyTo('trackaaofficial@gmail.com', 'Verification');
             $mail->addAddress($email);
             $mail->isHTML(true);
-            $mail->Subject = 'Go portal | Academic Officer Verification Code';
-            $bodyContent = '<h1>Your Nic : ' . $nic . ' </h1> <h1>Your Academic Officer Verification is :<span style="color:  rgb(151, 56, 252)">' . $verificationCode . '</span> </h1>';
+            $mail->Subject = 'Go portal | Student Verification Code';
+            $bodyContent = '<h1>Your Nic : ' . $nic . ' </h1> <h1>Your Student Verification is :<span style="color:  rgb(151, 56, 252)">' . $verificationCode . '</span> </h1>';
             $mail->Body    = $bodyContent;
 
             if (!$mail->send()) {

@@ -1,6 +1,5 @@
 <?php
 
-
 require "SMTP.php";
 require "PHPMailer.php";
 require "Exception.php";
@@ -65,11 +64,13 @@ if (isset($_SESSION["au"])) { // user validation
 
 
         // check on dbms before add
-        $dbmsCheck1_rs = Database::search("SELECT * FROM academic_officer WHERE nic = '" . $nic . "' ");
+        $dbmsCheck1_rs = Database::search("SELECT * FROM teacher WHERE nic = '" . $nic . "' ");
         $dbmsCheck1_num = $dbmsCheck1_rs->num_rows;
 
-        $dbmsCheck2_rs = Database::search("SELECT * FROM academic_officer WHERE email = '" . $email . "' ");
+        $dbmsCheck2_rs = Database::search("SELECT * FROM teacher WHERE email = '" . $email . "' ");
         $dbmsCheck2_num = $dbmsCheck2_rs->num_rows;
+
+
 
         if ($dbmsCheck1_num == 1) {
             echo ("There is a user with tha same NIC!!!");
@@ -85,11 +86,10 @@ if (isset($_SESSION["au"])) { // user validation
 
             $verificationCode = uniqid();
 
-            Database::iud("INSERT INTO academic_officer(nic, email, fname, lname, mobile1, mobile2, verification_code, verification_status, line1, line2, city, district, province)
+            Database::iud("INSERT INTO teacher (nic, email, fname, lname, mobile1, mobile2, verification_code, verification_status, line1, line2, city, district, province)
             VALUES ('" . $nic . "', '" . $email . "', '" . $fname . "', '" . $lname . "', '" . $mobile1 . "', '" . $mobile2 . "', '" . $verificationCode . "', '0', '" . $line1 . "', '" . $line2 . "', '" . $city . "', '" . $district . "', '" . $province . "') ");
 
-
-
+            // send a verification mail
             // email code
             $mail = new PHPMailer;
             $mail->IsSMTP();
@@ -103,8 +103,8 @@ if (isset($_SESSION["au"])) { // user validation
             $mail->addReplyTo('trackaaofficial@gmail.com', 'Verification');
             $mail->addAddress($email);
             $mail->isHTML(true);
-            $mail->Subject = 'Go portal | Academic Officer Verification Code';
-            $bodyContent = '<h1>Your Nic : ' . $nic . ' </h1> <h1>Your Academic Officer Verification is :<span style="color:  rgb(151, 56, 252)">' . $verificationCode . '</span> </h1>';
+            $mail->Subject = 'Go portal | Teacher Verification Code';
+            $bodyContent = '<h1>Your Nic : ' . $nic . ' </h1> <h1>Your Teacher Verification is :<span style="color:  rgb(151, 56, 252)">' . $verificationCode . '</span> </h1>';
             $mail->Body    = $bodyContent;
 
             if (!$mail->send()) {

@@ -1,5 +1,5 @@
 <div class="col-12 p-0 px-2 mt-3 text-center">
-    <span class="text-center fs-3 fw-bold">Academic Officer Adding</span>
+    <span class="text-center fs-3 fw-bold">Teacher Adding</span>
 </div>
 <div class="col-12 p-0 px-2 mt-3">
     <hr>
@@ -71,7 +71,7 @@
     <input id="province" type="text" class="form-control" placeholder="Add officers second mobile no" />
 </div>
 <div class="col-12 p-0 px-2 mt-3">
-    <button class="btn btn-primary w-100" onclick="addAcademicOfficer();" id="addOfficerBtn">Add Officer</button>
+    <button class="btn btn-primary w-100" onclick="addTeacher();" id="addOfficerBtn">Add Teacher</button>
 </div>
 <!-- <div class="col-6 p-0 px-2 mt-3">
     <button class="btn btn-dark w-100">Clear</button>

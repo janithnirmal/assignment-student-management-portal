@@ -5,10 +5,10 @@ if (isset($_GET['utype'])) {
         $utype = $_GET["utype"];
         echo ("<var id='utype' class='d-none'>" . $utype . "</var>");
     } else {
-        header("Location: index.php");
+        header("Location: ../index.php");
     }
 } else {
-    header("Location: index.php");
+    header("Location: ../index.php");
 }
 ?>
 
@@ -16,6 +16,7 @@ if (isset($_GET['utype'])) {
 // validating the user log in status
 session_start();
 $ACCESS = false;
+$userData;
 $userType;
 
 if (isset($_GET["utype"])) {
@@ -23,6 +24,7 @@ if (isset($_GET["utype"])) {
     if ($UTYPE == "A") {
         if (isset($_SESSION["au"])) {
             $ACCESS = true;
+            $userData = $_SESSION["au"];
         } else {
             header("Location: ../index.php");
         }
@@ -30,6 +32,7 @@ if (isset($_GET["utype"])) {
     } else if ($UTYPE == "AO") {
         if (isset($_SESSION["u"])) {
             $ACCESS = true;
+            $userData = $_SESSION["u"];
         } else {
             header("Location: ../index.php");
         }
@@ -37,6 +40,7 @@ if (isset($_GET["utype"])) {
     } else if ($UTYPE == "S") {
         if (isset($_SESSION["u"])) {
             $ACCESS = true;
+            $userData = $_SESSION["u"];
         } else {
             header("Location: ../index.php");
         }
@@ -44,6 +48,7 @@ if (isset($_GET["utype"])) {
     } else if ($UTYPE == "T") {
         if (isset($_SESSION["u"])) {
             $ACCESS = true;
+            $userData = $_SESSION["u"];
         } else {
             header("Location: ../index.php");
         }
@@ -89,8 +94,8 @@ if ($ACCESS) {
                         <img src="../src/images/logo.svg" alt="Bootstrap" width="30" height="24">
                     </a>
                     <div class="d-none d-lg-flex flex-column mx-2">
-                        <span class="fw-bold fs-6">Hi Janith Nirmal</span>
-                        <span class="fw-thin fs-6">rmjanithnirmal@gmail.com</span>
+                        <span class="fw-bold fs-6">Hi, <?php echo ($userData["fname"] . " " . $userData["lname"]); ?></span>
+                        <span class="fw-thin fs-6"><?php echo ($userData["email"]); ?></span>
                     </div>
                 </div>
                 <div class=" order-3 order-lg-4 d-block my-2 textwhite fs-3">
@@ -105,6 +110,12 @@ if ($ACCESS) {
                     <?php
                     if ($userType == "Admin") {
                         include("adminNavbar.php");
+                    } else if ($userType == "Academic Officer") {
+                        include("academicOfficerNavbar.php");
+                    } else if ($userType == "Teacher") {
+                        include("teacherNavbar.php");
+                    } else if ($userType == "Student") {
+                        include("studentNavbar.php");
                     } else {
                         // add other users navigations
                     }
@@ -121,6 +132,12 @@ if ($ACCESS) {
             <div class="col-12 p-0" style="overflow: hidden;">
                 <div class="row m-0 h-100" id="mainContentPanel">
                     <!-- content goes here -->
+
+                    <?php
+                    // view statistics
+                    include("../app/stats.php");
+                    ?>
+
                 </div>
             </div>
         </div>
@@ -128,13 +145,36 @@ if ($ACCESS) {
 
 
         <script src="../scripts/script.js"></script>
-        <script src="../scripts/admin.js"></script>
+        <?php
+        if ($userType == "Admin") {
+        ?>
+            <script src="../scripts/admin.js"></script>
+        <?php
+        } else if ($userType == "Academic Officer") {
+        ?>
+            <script src="../scripts/academicOfficer.js"></script>
+        <?php
+        } else if ($userType == "Teacher") {
+        ?>
+            <script src="../scripts/teacher.js"></script>
+        <?php
+        } else if ($userType == "Student") {
+        ?>
+            <script src="../scripts/student.js"></script>
+        <?php
+        } else {
+            # code...
+        }
+
+        ?>
         <script src="../scripts/bootstrap.bundle.js"></script>
     </body>
 
     </html>
 
 <?php
+} else {
+    echo ("something is wrong");
 }
 
 ?>

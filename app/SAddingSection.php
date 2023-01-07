@@ -1,5 +1,5 @@
 <div class="col-12 p-0 px-2 mt-3 text-center">
-    <span class="text-center fs-3 fw-bold">Academic Officer Adding</span>
+    <span class="text-center fs-3 fw-bold">Student Adding</span>
 </div>
 <div class="col-12 p-0 px-2 mt-3">
     <hr>
@@ -27,6 +27,32 @@
 <div class="col-6 p-0 px-2 mt-1">
     <label class="form-label fw-bold ">Mobile 2</label>
     <input id="mobile2" type="text" class="form-control" placeholder="Add officers second mobile no" />
+</div>
+<div class="col-6 p-0 px-2 mt-1">
+    <label class="form-label fw-bold ">Grade</label>
+    <select id="grade" class="form-control">
+        <option value="0" selected disabled>Select a Grade</option>
+        <option value="g6">Grade 6</option>
+        <option value="g7">Grade 7</option>
+        <option value="g8">Grade 8</option>
+        <option value="g9">Grade 9</option>
+        <option value="g10">Grade 10</option>
+        <option value="g11">Grade 11</option>
+        <option value="g12">Grade 12</option>
+        <option value="g13">Grade 13</option>
+    </select>
+</div>
+<div class="col-6 p-0 px-2 mt-1">
+    <label class="form-label fw-bold ">Birthday</label>
+    <input id="birthday" type="date" class="form-control" placeholder="" />
+</div>
+<div class="col-6 p-0 px-2 mt-1">
+    <label class="form-label fw-bold ">Gardiant Name</label>
+    <input id="gname" type="text" class="form-control" placeholder="Add officers email" />
+</div>
+<div class="col-6 p-0 px-2 mt-1">
+    <label class="form-label fw-bold ">Gardiant Mobile</label>
+    <input id="gmobile" type="text" class="form-control" placeholder="Add officers email" />
 </div>
 <div class="col-6 p-0 px-2 mt-1 pt-2">
     <img src="../src/images/user-select-img-1.jpg" class="w-100 rounded-4" style="height: 200px;" />
@@ -71,7 +97,7 @@
     <input id="province" type="text" class="form-control" placeholder="Add officers second mobile no" />
 </div>
 <div class="col-12 p-0 px-2 mt-3">
-    <button class="btn btn-primary w-100" onclick="addAcademicOfficer();" id="addOfficerBtn">Add Officer</button>
+    <button class="btn btn-primary w-100" onclick="addTeacher();" id="addOfficerBtn">Add Student</button>
 </div>
 <!-- <div class="col-6 p-0 px-2 mt-3">
     <button class="btn btn-dark w-100">Clear</button>

@@ -67,6 +67,14 @@ if (isset($_GET['utype'])) {
                             <label class="form-label">Verification Code</label>
                             <input type="text" class="form-control" id="vc" />
                         </div>
+                        <div class="col-6">
+                            <label class="form-label">Create Password</label>
+                            <input type="password" class="form-control" id="npass" />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Retype the Password</label>
+                            <input type="password" class="form-control" id="rtpass" />
+                        </div>
                         <div class="col-12 col-lg-6 mt-3">
                             <button class="mt-2 col-12 btn btn-primary" onclick="signUp();">Sign Up</button>
                         </div>
